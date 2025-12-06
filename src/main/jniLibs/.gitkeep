@@ -1,0 +1,12 @@
+# 在这里放置 Paddle Lite 的 so 库文件
+# 
+# 目录结构：
+# jniLibs/
+# ├── armeabi-v7a/
+# │   ├── libpaddle_light_api_shared.so
+# │   └── libNative.so
+# └── arm64-v8a/
+#     ├── libpaddle_light_api_shared.so
+#     └── libNative.so
+#
+# 下载地址：https://github.com/PaddlePaddle/Paddle-Lite/releases

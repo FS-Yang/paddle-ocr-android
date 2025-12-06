@@ -1,0 +1,88 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0'
+    }
+}
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+}
+
+android {
+    namespace 'com.fsyang.paddleocr'
+    compileSdk 33
+    ndkVersion "21.1.6352462"
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 33
+        
+        ndk {
+            abiFilters 'arm64-v8a'  // 官方 Paddle Lite 包仅支持 arm64
+        }
+        
+        consumerProguardFiles "consumer-rules.pro"
+        
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11 -frtti -fexceptions"
+                arguments "-DANDROID_STL=c++_shared"
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
+        }
+    }
+    
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+}
+
+// JitPack 发布配置
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.FS-Yang'
+                artifactId = 'paddle-ocr-android'
+                version = '1.0.0'
+            }
+        }
+    }
+}

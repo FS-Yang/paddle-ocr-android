@@ -1,0 +1,10 @@
+# 在这里放置 OCR 模型文件
+#
+# 需要的文件：
+# - ch_PP-OCRv3_det_slim_opt.nb    (检测模型)
+# - ch_PP-OCRv3_rec_slim_opt.nb    (识别模型)
+# - ch_ppocr_mobile_v2.0_cls_slim_opt.nb (方向分类模型)
+# - ppocr_keys_v1.txt              (字典文件)
+#
+# 模型下载：https://github.com/PaddlePaddle/PaddleOCR
+# 需要用 opt 工具转换为 .nb 格式
